@@ -49,12 +49,65 @@ def keepAuthorizedPreferences(p1, p2):
                 val = 1
             appreciations[i][j] = val
 
-
-
-
-
-
     return appreciations
 
 
-print (keepAuthorizedPreferences("TB", "B"))
+#Return true if all students have at least one potential student mate
+def checkIfPossible(preferences):
+    possible = True
+    nbPotentialMate = 0
+
+    for i in range(len(preferences)):
+        for j in range(len(preferences)):
+            nbPotentialMate += preferences[i][j]
+
+        print(nbPotentialMate)
+
+        if nbPotentialMate == -1:
+            # if yes, means that the student i cannot be assigned to a group
+            possible = False
+
+        nbPotentialMate = 0
+
+    return possible
+
+# Return the number of groups of 2 and 3 we should have at the end
+def nbBinomeTrinome(nbStudents):
+    if nbStudents <= 36:
+
+        if nbStudents%2 == 0:
+            return nbStudents/2, 0
+        else:
+            return nbStudents/2-1.5, 1
+
+    else:
+        return 18-(nbStudents-36), nbStudents-36
+
+
+# Return the list of binomes created
+def createBinomes(preferences):
+
+    binomes = []
+    nbBinome = nbBinomeTrinome(len(preferences))[0]
+
+    i = 0
+    j = 0
+
+    for i in range(len(preferences)):
+        for j in range(len(preferences)):
+
+            if (preferences[i][j] == 1 and not(j in dict(binomes)) and not(j in dict(binomes).values()) and not(i in dict(binomes)) and not(i in dict(binomes).values())):
+
+                binomes.append((i, j))
+
+    return binomes
+
+
+# Parameter : list of binomes and array of preferences of students not assigned in a group
+#def createTrinomes(binomes):
+
+
+print(keepAuthorizedPreferences("TB", "B"))
+print(checkIfPossible(keepAuthorizedPreferences("P", "P")))
+print("binomes : ", createBinomes(keepAuthorizedPreferences("TB", "TB")))
+print(nbBinomeTrinome(40))
