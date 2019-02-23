@@ -18,6 +18,20 @@ def readAppreciationsCSV():
         del nameCorrelation[-1]
         return nameCorrelation, appreciations
 
+    #Return true if mention1 is better or equal than the mention2
+def isBetter(mention1, mention2):
+    relation = ["AR", "I", "P", "AB", "B", "TB"]
+    reponse = False
+    for i in range(len(relation)):
+        if relation[i] == mention1:
+            rang1 = i
+        if relation[i] == mention2:
+            rang2 = i
+    return rang1 >= rang2
+
+
+
+
 def keepAuthorizedPreferences(p1, p2):
     appreciations = readAppreciationsCSV()[1]
 
@@ -25,4 +39,5 @@ def keepAuthorizedPreferences(p1, p2):
 
     return appreciations
 
-print(keepAuthorizedPreferences("TB", "TB"))
+
+print(isBetter("B", "AR"))
