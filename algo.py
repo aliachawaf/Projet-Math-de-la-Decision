@@ -20,4 +20,12 @@ def readAppreciationsCSV():
         del nameCorrelation[-1]
         return nameCorrelation, appreciations
 
-print(readAppreciationsCSV())
+
+def keepAuthorizedPreferences(p1, p2):
+    appreciations = readAppreciationsCSV()[1]
+
+    #to do
+
+    return appreciations
+
+print(keepAuthorizedPreferences("TB", "TB"))
