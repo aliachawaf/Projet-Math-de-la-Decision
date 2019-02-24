@@ -1,4 +1,5 @@
 import csv
+import time
 from itertools import combinations
 
 # This function reads the CSV containing the preferences of each student.
@@ -49,6 +50,8 @@ def keepAuthorizedPreferences(p1, p2):
                 val = 1
             appreciations[i][j] = val
 
+    for a in appreciations:
+        print(a)
     return appreciations
 
 
@@ -59,11 +62,9 @@ def checkIfPossible(preferences):
 
     for i in range(len(preferences)):
         for j in range(len(preferences)):
-            nbPotentialMate += preferences[i][j]
+            nbPotentialMate += preferences[i][j] + preferences[j][i]
 
-        print(nbPotentialMate)
-
-        if nbPotentialMate == -1:
+        if nbPotentialMate == -2:
             # if yes, means that the student i cannot be assigned to a group
             possible = False
 
@@ -233,6 +234,7 @@ def listStudentsInTrinomes(trinomes):
 
 
 def main():
+    now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
 
     resultList = []
@@ -242,22 +244,32 @@ def main():
 
     while len(resultList) == 0:
 
+        if i == 1 or i == 3 or i == 6 or i == 10 or i == 15:
+            rang2 = rang2 - 1
+            rang1 = 5
+
+
+
         authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
 
-        # if checkIfPossible(authorizedPref):
+        print(listPref[rang1] + " " + listPref[rang2])
+        if checkIfPossible(authorizedPref):
 
-        resultList = listCorrectCombinations(authorizedPref)
-        if len(resultList) == 0:
-            print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
-        if i % 2 ==0:
-            rang1 = rang1 - 1
-        else:
-            rang2 = rang2 - 1
+            resultList = listCorrectCombinations(authorizedPref)
+            if len(resultList) == 0:
+                print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
+
 
         i = i+1
+        rang1 = rang1 - 1
 
+    print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
     for c in resultList:
+
         print("correct comb : ", c)
+
+    new_now = time.time()
+    print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
 
 
 main()
