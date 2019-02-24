@@ -144,8 +144,7 @@ def listCombinationsBinomes(binomes, nbBinomesNeeded):
             # the combination is correct and then we keep it
             listCorrectCombinations.append(c)
 
-    for c in listCorrectCombinations:
-        print("correct comb : ", c)
+
 
     return listCorrectCombinations
 
@@ -170,13 +169,29 @@ def listStudentOfBinomes(binomes):
 def main():
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
 
-    authorizedPref = keepAuthorizedPreferences("B", "B")
-
-    #if checkIfPossible(authorizedPref):
-
+    resultList = []
+    rang1 = 5
+    rang2 = 5
+    i = 0
     nbBinomesNeeded = nbBinomeTrinome(11)[0]
+    while len(resultList) == 0:
 
-    list = listCombinationsBinomes(listPossibleBinomes(authorizedPref), int(nbBinomesNeeded))
+        authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
+
+        # if checkIfPossible(authorizedPref):
+
+        resultList = listCombinationsBinomes(listPossibleBinomes(authorizedPref), int(nbBinomesNeeded))
+        if len(resultList) == 0:
+            print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
+        if i % 2 ==0:
+            rang1 = rang1 - 1
+        else:
+            rang2 = rang2 - 1
+
+        i = i+1
+
+    for c in resultList:
+        print("correct comb : ", c)
 
 
 main()
