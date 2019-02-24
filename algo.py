@@ -173,7 +173,7 @@ def main():
     rang1 = 5
     rang2 = 5
     i = 0
-    nbBinomesNeeded = nbBinomeTrinome(11)[0]
+    nbBinomesNeeded = nbBinomeTrinome(11)[0] + nbBinomeTrinome(11)[1]
     while len(resultList) == 0:
 
         authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
