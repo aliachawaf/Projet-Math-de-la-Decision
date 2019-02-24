@@ -1,7 +1,8 @@
 import csv
 
-#This function reads the CSV containing the preferences of each student.
-#Returns a dictionary row-name, and the matrix of appreciations.
+
+# This function reads the CSV containing the preferences of each student.
+# Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
     with open('preferences.csv', mode='r') as preferences:
         csv_reader = csv.reader(preferences, delimiter=',')
@@ -20,7 +21,8 @@ def readAppreciationsCSV():
         del nameCorrelation[-1]
         return nameCorrelation, appreciations
 
-    #Return true if mention1 is better or equal than the mention2
+
+# Return true if mention1 is better or equal than the mention2
 def isBetter(mention1, mention2):
     relation = ["AR", "I", "P", "AB", "B", "TB"]
     rang1 = 0
@@ -35,9 +37,7 @@ def isBetter(mention1, mention2):
     return rang1 >= rang2
 
 
-
-
-#Return une matrice avec 0 = pas d'arrete, 1 = arrete, -1 = lui meme
+# Return une matrice avec 0 = pas d'arrete, 1 = arrete, -1 = lui meme
 def keepAuthorizedPreferences(p1, p2):
     appreciations = readAppreciationsCSV()[1]
     for i in range(len(appreciations)):
@@ -52,7 +52,7 @@ def keepAuthorizedPreferences(p1, p2):
     return appreciations
 
 
-#Return true if all students have at least one potential student mate
+# Return true if all students have at least one potential student mate
 def checkIfPossible(preferences):
     possible = True
     nbPotentialMate = 0
@@ -70,6 +70,7 @@ def checkIfPossible(preferences):
         nbPotentialMate = 0
 
     return possible
+
 
 # Return the number of groups of 2 and 3 we should have at the end
 def nbBinomeTrinome(nbStudents):
@@ -104,7 +105,7 @@ def createBinomes(preferences):
 
 
 # Parameter : list of binomes and array of preferences of students not assigned in a group
-#def createTrinomes(binomes):
+# def createTrinomes(binomes):
 
 
 print(keepAuthorizedPreferences("TB", "B"))
