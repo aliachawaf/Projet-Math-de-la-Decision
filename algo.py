@@ -1,10 +1,10 @@
 import csv
-
+from itertools import combinations
 
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
-    with open('preferences.csv', mode='r') as preferences:
+    with open('preferences11.csv', mode='r') as preferences:
         csv_reader = csv.reader(preferences, delimiter=',')
         line_count=0
         nameCorrelation = {0:''}
@@ -84,7 +84,7 @@ def nbBinomeTrinome(nbStudents):
     else:
         return 18-(nbStudents-36), nbStudents-36
 
-
+'''
 # Return the list of binomes created
 def createBinomes(preferences):
 
@@ -102,13 +102,81 @@ def createBinomes(preferences):
                 binomes.append((i, j))
 
     return binomes
+'''
+
+# Parameter : array of authorized preferences
+# Return a list of all possible binomes depending on the authorized preferences
+def listPossibleBinomes(authorizedPref):
+    binomes = []
+
+    for i in range(len(authorizedPref)):
+        for j in range(len(authorizedPref)):
+            if authorizedPref[i][j] == 1:
+                binomes.append((i, j))
+
+    return binomes
+
+
+# Parameter : list of all possible binomes
+# Return the list of all possible combination of binomes depending on the number of binomes we need
+# Post condition : a student appears only once in each combination of binomes
+def listCombinationsBinomes(binomes, nbBinomesNeeded):
+
+    allCombinations = combinations(binomes, nbBinomesNeeded)
+    listCorrectCombinations = []
+
+    for c in allCombinations:
+        listStudents = listStudentOfBinomes(c)
+
+        j = 0
+        hasDoublons = False
+
+        while j <= 11 and not(hasDoublons):
+
+            # if the student j appears in more than one binome of the combination
+            if listStudents.count(j) > 1:
+                hasDoublons = True
+
+            j += 1 #next student
+        # end while : if there is a student appearing more than once OR if we checked all students in the combination
+
+        if not(hasDoublons):
+            # the combination is correct and then we keep it
+            listCorrectCombinations.append(c)
+
+    for c in listCorrectCombinations:
+        print("correct comb : ", c)
+
+    return listCorrectCombinations
+
+
+# Parameter : a list of binomes
+# Return the list of the students appearing in the binomes (with doublons)
+def listStudentOfBinomes(binomes):
+
+    list = []
+
+    for i in range(len(binomes)):
+        list.append(binomes[i][0]) # First student of the binome i
+        list.append(binomes[i][1]) # Second student of the binome i
+
+    return list
 
 
 # Parameter : list of binomes and array of preferences of students not assigned in a group
 # def createTrinomes(binomes):
 
 
-print(keepAuthorizedPreferences("TB", "B"))
-print(checkIfPossible(keepAuthorizedPreferences("P", "P")))
-print("binomes : ", createBinomes(keepAuthorizedPreferences("TB", "TB")))
-print(nbBinomeTrinome(40))
+def main():
+    listPref = ["AR", "I", "P", "AB", "B", "TB"]
+
+    authorizedPref = keepAuthorizedPreferences("B", "B")
+
+    #if checkIfPossible(authorizedPref):
+
+    nbBinomesNeeded = nbBinomeTrinome(11)[0]
+
+    list = listCombinationsBinomes(listPossibleBinomes(authorizedPref), int(nbBinomesNeeded))
+
+
+main()
