@@ -2,6 +2,10 @@ import csv
 import time
 from itertools import combinations
 
+ordreMentions = [("TB","TB"),("TB","B"),("B","B"),("TB","AB"),("B","AB"),("AB","AB"),("TB","P"),("B","P"),("AB","P"),
+                     ("P","P"),("TB","I"),("B","I"),("AB","I"),("P","I"),("I","I"),("TB","AR"),("B","AR"),("AB","AR"),("P","AR"),
+                     ("I","AR"),("AR","AR")]
+
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
@@ -50,13 +54,24 @@ def writeCSV(nameCorrelation, listResult):
             i = i + 1
 
 
+def ordreCouplePref(p1, p2):
+    ordre = 0
+
+    for i in range(len(ordreMentions)):
+        if (p1 == ordreMentions[i][0] and p2 == ordreMentions[i][1]) or (
+                p2 == ordreMentions[i][0] and p1 == ordreMentions[i][1]):
+            ordre = i
+
+    return ordre
+
 # Return true if mention1 is better or equal than the mention2
-def isBetter(mention1, mention2):
+def isBetter(ordreComparant, ordreCompare):
+
     relation = ["AR", "I", "P", "AB", "B", "TB"]
     rang1 = 0
     rang2 = 0
 
-    reponse = False
+
     for i in range(len(relation)):
         if relation[i] == mention1:
             rang1 = i
@@ -68,14 +83,26 @@ def isBetter(mention1, mention2):
 # Return une matrice avec 0 = pas d'arrete, 1 = arrete, -1 = lui meme
 def keepAuthorizedPreferences(p1, p2):
     appreciations = readAppreciationsCSV()[1]
+
+    ordreComparant = ordreCouplePref(p1, p2)
+
     for i in range(len(appreciations)):
         for j in range(len(appreciations)):
             val = 0
+
             if i == j:
                 val = -1
-            elif (isBetter(appreciations[i][j], p1) and isBetter(appreciations[j][i], p2)) or (isBetter(appreciations[j][i], p1) and isBetter(appreciations[i][j], p2)):
-                val = 1
-            appreciations[i][j] = val
+            else:
+
+                ordreCompare = ordreCouplePref(appreciations[i][j], appreciations[j][i])
+
+                if (ordreCompare <= ordreComparant):
+                    val = 1
+
+            if appreciations[j][i] == 0 or appreciations[j][i] == 1 or appreciations[j][i] == -1:
+                appreciations[i][j] = 0
+            else:
+                appreciations[i][j] = val
 
     return appreciations
 
@@ -127,9 +154,10 @@ def listPossibleBinomes(authorizedPref):
 # Parameter : list of all possible binomes
 # Return the list of all possible combination of binomes depending on the number of binomes we need
 # Post condition : a student appears only once in each combination of binomes
-def listCombinationsBinomes(binomes, nbBinomesNeeded):
+def listCombinationsBinomes(binomes, nbStudents):
 
-    allCombinations = combinations(binomes, nbBinomesNeeded)
+    nbBinomesNeeded = nbBinomeTrinome(nbStudents)[0] + nbBinomeTrinome(nbStudents)[1]
+    allCombinations = combinations(binomes, int(nbBinomesNeeded))
     listCorrectCombinationsBinomes = []
 
     for c in allCombinations:
@@ -138,7 +166,7 @@ def listCombinationsBinomes(binomes, nbBinomesNeeded):
         j = 0
         hasDoublons = False
 
-        while j <= 11 and not(hasDoublons):
+        while j <= nbStudents and not(hasDoublons):
 
             # if the student j appears in more than one binome of the combination
             if listStudents.count(j) > 1:
@@ -221,7 +249,7 @@ def listCorrectCombinations(matrice):
 
     nbStudents = len(matrice)
     nbBinomesNeeded = nbBinomeTrinome(nbStudents)[0] + nbBinomeTrinome(nbStudents)[1]
-    listCombinationsWithoutTrinome = listCombinationsBinomes(listPossibleBinomes(matrice), int(nbBinomesNeeded))
+    listCombinationsWithoutTrinome = listCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
     listFinalResult = []
     for c in listCombinationsWithoutTrinome:
@@ -258,6 +286,60 @@ def listStudentsInTrinomes(trinomes):
 # def createTrinomes(binomes):
 
 
+def prefResult(resultList, matrice):
+
+    for combination in resultList:
+
+        nbP = 0
+
+        for group in combination:
+
+            pref = []
+
+            if (len(group) == 2):
+
+                students = []
+
+                for i in group:
+                    students.append(i)
+
+                pref1 = matrice[students[0]][students[1]]
+                pref2 = matrice[students[1]][students[0]]
+
+                pref.append((pref1, pref2))
+
+                if (pref1 == 'P' or pref2 == 'P'):
+                    nbP += 1
+
+            else:
+
+                students = []
+
+                for i in group:
+                    students.append(i)
+
+                pref1 = matrice[students[0]][students[1]]
+                pref2 = matrice[students[1]][students[0]]
+                pref3 = matrice[students[2]][students[0]]
+                pref4 = matrice[students[0]][students[2]]
+                pref5 = matrice[students[1]][students[2]]
+                pref6 = matrice[students[2]][students[1]]
+
+                pref.append((pref1, pref2, pref3, pref4, pref5, pref6))
+
+                if (pref1 == 'P' or pref2 == 'P'):
+                    nbP += 1
+
+                if (pref3 == 'P' or pref4 == 'P'):
+                    nbP += 1
+
+                if (pref5 == 'P' or pref6 == 'P'):
+                    nbP += 1
+
+            print(pref)
+        print(nbP)
+
+
 def main():
     now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
@@ -275,14 +357,15 @@ def main():
 
 
 
-        authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
 
+        authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
+        
         if checkIfPossible(authorizedPref):
 
             resultList = listCorrectCombinations(authorizedPref)
-            if len(resultList) == 0:
-                print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
 
+        if len(resultList) == 0:
+            print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
 
         i = i+1
         rang1 = rang1 - 1
@@ -298,6 +381,8 @@ def main():
     nameCorrelation = readAppreciationsCSV()[0]
 
     writeCSV(nameCorrelation, resultList)
+
+    prefResult(resultList, readAppreciationsCSV()[1])
 
 
 main()
