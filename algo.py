@@ -2,17 +2,20 @@ import csv
 import time
 from itertools import combinations
 
-ordreMentions = [("TB","TB"),("TB","B"),("B","B"),("TB","AB"),("B","AB"),("AB","AB"),("TB","P"),("B","P"),("AB","P"),
-                     ("P","P"),("TB","I"),("B","I"),("AB","I"),("P","I"),("I","I"),("TB","AR"),("B","AR"),("AB","AR"),("P","AR"),
-                     ("I","AR"),("AR","AR")]
+ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"), ("AB", "AB"), ("TB", "P"),
+                 ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
+                 ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
+
+nameCSV = 'preferences10.csv'
+
 
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
-    with open('preferences11.csv', mode='r') as preferences:
+    with open(nameCSV, mode='r') as preferences:
         csv_reader = csv.reader(preferences, delimiter=',')
-        line_count=0
-        nameCorrelation = {0:''}
+        line_count = 0
+        nameCorrelation = {0: ''}
         appreciations = []
         for line in csv_reader:
             if line_count == 0: #Retrieve student names
@@ -27,7 +30,7 @@ def readAppreciationsCSV():
         return nameCorrelation, appreciations
 
 
-#This function writes a CSV conforming to the standards required by the project.
+# This function writes a CSV conforming to the standards required by the project.
 def writeCSV(nameCorrelation, listResult):
     with open('groupesCG.csv', 'w') as rendu:
         writer = csv.writer(rendu)
@@ -54,6 +57,7 @@ def writeCSV(nameCorrelation, listResult):
             i = i + 1
 
 
+#  Retourne l'indice dans le tableau global "ordreMentions" du couple de mentions (p1, p2)
 def ordreCouplePref(p1, p2):
     ordre = 0
 
@@ -64,24 +68,13 @@ def ordreCouplePref(p1, p2):
 
     return ordre
 
-# Return true if mention1 is better or equal than the mention2
-def isBetter(ordreComparant, ordreCompare):
 
-    relation = ["AR", "I", "P", "AB", "B", "TB"]
-    rang1 = 0
-    rang2 = 0
+#  Return une matrice des etudiants avec comme valeur :
+#  0 = pas d'arrete pour le couple de pref (p1, p2), 1 = arrete, -1 = lui meme
 
-
-    for i in range(len(relation)):
-        if relation[i] == mention1:
-            rang1 = i
-        if relation[i] == mention2:
-            rang2 = i
-    return rang1 >= rang2
-
-
-# Return une matrice avec 0 = pas d'arrete, 1 = arrete, -1 = lui meme
 def keepAuthorizedPreferences(p1, p2):
+
+    # On récupère la matrice venant du CSV
     appreciations = readAppreciationsCSV()[1]
 
     ordreComparant = ordreCouplePref(p1, p2)
@@ -96,7 +89,7 @@ def keepAuthorizedPreferences(p1, p2):
 
                 ordreCompare = ordreCouplePref(appreciations[i][j], appreciations[j][i])
 
-                if (ordreCompare <= ordreComparant):
+                if ordreCompare <= ordreComparant:
                     val = 1
 
             if appreciations[j][i] == 0 or appreciations[j][i] == 1 or appreciations[j][i] == -1:
@@ -139,7 +132,7 @@ def nbBinomeTrinome(nbStudents):
 
 
 # Parameter : array of authorized preferences
-# Return a list of all possible binomes depending on the authorized preferences
+# Return the list of all possible binomes depending on the matrice of authorized preferences
 def listPossibleBinomes(authorizedPref):
     binomes = []
 
@@ -161,7 +154,7 @@ def listCombinationsBinomes(binomes, nbStudents):
     listCorrectCombinationsBinomes = []
 
     for c in allCombinations:
-        listStudents = listStudentOfBinomes(c)
+        listStudents = listStudentsInBinomes(c)
 
         j = 0
         hasDoublons = False
@@ -181,11 +174,13 @@ def listCombinationsBinomes(binomes, nbStudents):
 
     return listCorrectCombinationsBinomes
 
+
+#  Return the list of all possible combination of trinome based on one combinaison
 def listCombinationsWithTrinomes(matrice, combinaison):
 
     listCorrectCombinationsTrinomes = []
     studentsNotAssigned = []
-    listStudents = listStudentOfBinomes(combinaison)
+    listStudents = listStudentsInBinomes(combinaison)
     listAllTrinome = []
     listFinal = []
 
@@ -244,7 +239,7 @@ def binomeIsNotInTrinomes(binome, listTrinomes):
 
     return result
 
-
+#  Return the list of all combinaison possible based on the matrice
 def listCorrectCombinations(matrice):
 
     nbStudents = len(matrice)
@@ -262,7 +257,7 @@ def listCorrectCombinations(matrice):
 
 # Parameter : a list of binomes
 # Return the list of the students appearing in the binomes (with doublons)
-def listStudentOfBinomes(binomes):
+def listStudentsInBinomes(binomes):
 
     list = []
 
@@ -282,15 +277,10 @@ def listStudentsInTrinomes(trinomes):
 
     return list
 
-# Parameter : list of binomes and array of preferences of students not assigned in a group
-# def createTrinomes(binomes):
-
-
+#affiche les differentes combinaisons finales
 def prefResult(resultList, matrice):
 
     for combination in resultList:
-
-        nbP = 0
 
         for group in combination:
 
@@ -308,9 +298,6 @@ def prefResult(resultList, matrice):
 
                 pref.append((pref1, pref2))
 
-                if (pref1 == 'P' or pref2 == 'P'):
-                    nbP += 1
-
             else:
 
                 students = []
@@ -327,17 +314,8 @@ def prefResult(resultList, matrice):
 
                 pref.append((pref1, pref2, pref3, pref4, pref5, pref6))
 
-                if (pref1 == 'P' or pref2 == 'P'):
-                    nbP += 1
-
-                if (pref3 == 'P' or pref4 == 'P'):
-                    nbP += 1
-
-                if (pref5 == 'P' or pref6 == 'P'):
-                    nbP += 1
-
             print(pref)
-        print(nbP)
+        print(" ")
 
 
 def main():
@@ -382,7 +360,7 @@ def main():
 
     writeCSV(nameCorrelation, resultList)
 
-    prefResult(resultList, readAppreciationsCSV()[1])
+    #prefResult(resultList, readAppreciationsCSV()[1])
 
 
 main()
