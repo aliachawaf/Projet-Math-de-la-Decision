@@ -1,12 +1,14 @@
 import csv
 import time
+import sys
 from itertools import combinations
 
 ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"), ("AB", "AB"), ("TB", "P"),
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-nameCSV = 'preferences10.csv'
+ext = sys.argv[1][1:]
+nameCSV = "preferences" + ext + ".csv"
 
 
 # This function reads the CSV containing the preferences of each student.
@@ -354,7 +356,7 @@ def main():
 
     writeCSV(nameCorrelation, resultList)
 
-    #prefResult(resultList, readAppreciationsCSV()[1])
+    prefResult(resultList, readAppreciationsCSV()[1])
 
 
 main()
