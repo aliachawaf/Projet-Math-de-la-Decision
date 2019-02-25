@@ -23,6 +23,33 @@ def readAppreciationsCSV():
         return nameCorrelation, appreciations
 
 
+#This function writes a CSV conforming to the standards required by the project.
+def writeCSV(nameCorrelation, listResult):
+    with open('groupesCG.csv', 'w') as rendu:
+        writer = csv.writer(rendu)
+
+        writer.writerow(['Nombre de repartitions', len(listResult)])
+        writer.writerow([])
+        i = 1
+
+        for repartition in listResult:
+
+            writer.writerow(['Repartition numero', i])
+            writer.writerow(['Nombre de groupes', len(repartition)])
+
+            n = 1
+            for group in repartition:
+                line = ["Group " + str(n)]
+                for student in group:
+                    line.append(nameCorrelation[student])
+
+                writer.writerow(line)
+                n = n + 1
+
+            writer.writerow([])
+            i = i + 1
+
+
 # Return true if mention1 is better or equal than the mention2
 def isBetter(mention1, mention2):
     relation = ["AR", "I", "P", "AB", "B", "TB"]
@@ -50,8 +77,6 @@ def keepAuthorizedPreferences(p1, p2):
                 val = 1
             appreciations[i][j] = val
 
-    for a in appreciations:
-        print(a)
     return appreciations
 
 
@@ -252,7 +277,6 @@ def main():
 
         authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
 
-        print(listPref[rang1] + " " + listPref[rang2])
         if checkIfPossible(authorizedPref):
 
             resultList = listCorrectCombinations(authorizedPref)
@@ -270,6 +294,10 @@ def main():
 
     new_now = time.time()
     print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
+
+    nameCorrelation = readAppreciationsCSV()[0]
+
+    writeCSV(nameCorrelation, resultList)
 
 
 main()
