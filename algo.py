@@ -2,19 +2,41 @@ import csv
 import time
 import sys
 from itertools import combinations
+from itertools import islice
 
 ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"), ("AB", "AB"), ("TB", "P"),
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-ext = sys.argv[1][1:]
-nameCSV = "preferences" + ext + ".csv"
+#ext = sys.argv[1][1:]
+#nameCSV = "preferences" + ext + ".csv"
+nameCSV = "preferences.csv"
+nameCSV11 = "11eleves.csv"
+
+def take11students():
+
+    with open(nameCSV, mode='r') as preferences:
+        csv_reader = csv.reader(preferences, delimiter=',')
+
+        row_count = sum(1 for row in csv_reader)
+
+        if (row_count > 12):
+
+            with open('11eleves.csv', 'w', newline="") as rendu:
+                writer = csv.writer(rendu, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+                for line in islice(csv_reader, 0, 12):
+
+                    writer.writerow(line)
+
+        else:
+            nameCSV11 = nameCSV
 
 
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
-    with open(nameCSV, mode='r') as preferences:
+    with open(nameCSV11, mode='r') as preferences:
         csv_reader = csv.reader(preferences, delimiter=',')
         line_count = 0
         nameCorrelation = {0: ''}
@@ -315,6 +337,9 @@ def prefResult(resultList, matrice):
 
 
 def main():
+
+    take11students()
+
     now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
 
