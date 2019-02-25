@@ -32,29 +32,23 @@ def readAppreciationsCSV():
 
 # This function writes a CSV conforming to the standards required by the project.
 def writeCSV(nameCorrelation, listResult):
-    with open('groupesCG.csv', 'w') as rendu:
-        writer = csv.writer(rendu)
-
-        writer.writerow(['Nombre de repartitions', len(listResult)])
-        writer.writerow([])
-        i = 1
+    with open('CG.csv', 'w', newline="") as rendu:
+        writer = csv.writer(rendu, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
         for repartition in listResult:
 
-            writer.writerow(['Repartition numero', i])
-            writer.writerow(['Nombre de groupes', len(repartition)])
+            lineRepartition = []
 
-            n = 1
             for group in repartition:
-                line = ["Group " + str(n)]
+
+                lineGroup = ""
                 for student in group:
-                    line.append(nameCorrelation[student])
 
-                writer.writerow(line)
-                n = n + 1
+                    lineGroup = lineGroup + " " + nameCorrelation[student]
 
-            writer.writerow([])
-            i = i + 1
+                lineRepartition.append(lineGroup)
+
+            writer.writerow(lineRepartition)
 
 
 #  Retourne l'indice dans le tableau global "ordreMentions" du couple de mentions (p1, p2)
