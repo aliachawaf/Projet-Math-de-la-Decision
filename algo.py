@@ -8,9 +8,9 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-ext = sys.argv[1][1:]
-nameCSV = "DONNEES/preferences" + ext + ".csv"
-#nameCSV = "preferences10.csv"
+#ext = sys.argv[1][1:]
+#nameCSV = "DONNEES/preferences" + ext + ".csv"
+nameCSV = "preferences11.csv"
 #nameCSV11 = "11eleves.csv"
 
 def take11students():
@@ -336,9 +336,84 @@ def prefResult(resultList, matrice):
         print(" ")
 
 
+# Return the min occurrence of the pefMin in the list of all combinations
+def keepCombinationsWithMinOccurrence(resultList, matrice, prefMin):
+
+    nbOccurrenceMin = 1;
+
+    # Search for the min number of occurence of prefMin
+    for combination in resultList:
+
+        nbOccurrenceComb = nbOccurenceOfPrefMin(combination, matrice, prefMin)
+
+        if nbOccurrenceComb < nbOccurrenceMin:
+            nbOccurrenceMin = nbOccurrenceComb
+
+
+    # Keep only combinations with the min number of occurrence found
+    finalResult = []
+
+    for combination in resultList:
+        nbOccurrenceComb = nbOccurenceOfPrefMin(combination, matrice, prefMin)
+
+        if nbOccurrenceComb == nbOccurrenceMin:
+            finalResult.append(combination)
+
+    return finalResult
+
+
+# Return the number of occurrence of prefMin in combination
+def nbOccurenceOfPrefMin(combination, matrice, prefMin):
+
+    nbOccurrence = 0;
+    pref = []
+
+    for group in combination:
+
+        students = []
+        for i in group:
+            students.append(i)
+
+        pref1 = matrice[students[0]][students[1]]
+        pref2 = matrice[students[1]][students[0]]
+        pref.append(pref1)
+        pref.append(pref2)
+
+        if (len(group) == 3):
+            pref3 = matrice[students[2]][students[0]]
+            pref4 = matrice[students[0]][students[2]]
+            pref5 = matrice[students[1]][students[2]]
+            pref6 = matrice[students[2]][students[1]]
+
+            pref.append(pref3)
+            pref.append(pref4)
+            pref.append(pref5)
+            pref.append(pref6)
+
+    for p in pref:
+        if p == prefMin:
+            nbOccurrence += 1
+
+    return nbOccurrence
+
+
+# Return true if mention1 is better or equal than the mention2
+def isBetter(mention1, mention2):
+    relation = ["AR", "I", "P", "AB", "B", "TB"]
+    rang1 = 0
+    rang2 = 0
+
+    reponse = False
+    for i in range(len(relation)):
+        if relation[i] == mention1:
+            rang1 = i
+        if relation[i] == mention2:
+            rang2 = i
+
+    return rang1 >= rang2
+
+
 def main():
-
-
 
     now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
@@ -353,9 +428,6 @@ def main():
         if i == 1 or i == 3 or i == 6 or i == 10 or i == 15:
             rang2 = rang2 - 1
             rang1 = 5
-
-
-
 
         authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
         
@@ -377,11 +449,19 @@ def main():
     new_now = time.time()
     print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
 
+
     nameCorrelation = readAppreciationsCSV()[0]
 
     writeCSV(nameCorrelation, resultList)
 
-    prefResult(resultList, readAppreciationsCSV()[1])
+    #prefResult(resultList, readAppreciationsCSV()[1])
 
+
+    if isBetter(rang1+1, rang2):
+        prefMin = listPref[rang2]
+    else:
+        prefMin = listPref[rang1+1]
+
+    keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
 
 main()
