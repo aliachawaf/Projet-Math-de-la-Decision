@@ -8,9 +8,9 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-#ext = sys.argv[1][1:]
-#nameCSV = "DONNEES/preferences" + ext + ".csv"
-nameCSV = "preferences11.csv"
+ext = sys.argv[1][1:]
+nameCSV = ".../DONNEES/preferences" + ext + ".csv"
+#nameCSV = "preferences11.csv"
 #nameCSV11 = "11eleves.csv"
 
 def take11students():
@@ -435,33 +435,27 @@ def main():
 
             resultList = listCorrectCombinations(authorizedPref)
 
-        if len(resultList) == 0:
-            print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
+        #if len(resultList) == 0:
+        #    print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
 
         i = i+1
         rang1 = rang1 - 1
 
-    print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
-    for c in resultList:
-
-        print("correct comb : ", c)
+    #print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
 
     new_now = time.time()
     print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
-
-
-    nameCorrelation = readAppreciationsCSV()[0]
-
-    writeCSV(nameCorrelation, resultList)
-
-    #prefResult(resultList, readAppreciationsCSV()[1])
-
 
     if isBetter(rang1+1, rang2):
         prefMin = listPref[rang2]
     else:
         prefMin = listPref[rang1+1]
 
-    keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
+    finalResult = keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
+
+    nameCorrelation = readAppreciationsCSV()[0]
+
+    writeCSV(nameCorrelation, finalResult)
+
 
 main()
