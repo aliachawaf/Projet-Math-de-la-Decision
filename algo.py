@@ -8,10 +8,10 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-#ext = sys.argv[1][1:]
-#nameCSV = "preferences" + ext + ".csv"
-nameCSV = "preferences.csv"
-nameCSV11 = "11eleves.csv"
+ext = sys.argv[1][1:]
+nameCSV = "DONNEES/preferences" + ext + ".csv"
+#nameCSV = "preferences10.csv"
+#nameCSV11 = "11eleves.csv"
 
 def take11students():
 
@@ -36,7 +36,7 @@ def take11students():
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
 def readAppreciationsCSV():
-    with open(nameCSV11, mode='r') as preferences:
+    with open(nameCSV, mode='r') as preferences:
         csv_reader = csv.reader(preferences, delimiter=',')
         line_count = 0
         nameCorrelation = {0: ''}
@@ -338,7 +338,7 @@ def prefResult(resultList, matrice):
 
 def main():
 
-    take11students()
+
 
     now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
