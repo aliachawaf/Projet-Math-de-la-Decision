@@ -1,6 +1,7 @@
 import csv
 import time
 import sys
+import copy
 from itertools import combinations
 from itertools import islice
 
@@ -8,29 +9,10 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-ext = sys.argv[1][1:]
-nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-#nameCSV = "preferences11.csv"
+#ext = sys.argv[1][1:]
+#nameCSV = ".../DONNEES/preferences" + ext + ".csv"
+nameCSV = "preferences11.csv"
 #nameCSV11 = "11eleves.csv"
-
-def take11students():
-
-    with open(nameCSV, mode='r') as preferences:
-        csv_reader = csv.reader(preferences, delimiter=',')
-
-        row_count = sum(1 for row in csv_reader)
-
-        if (row_count > 12):
-
-            with open('11eleves.csv', 'w', newline="") as rendu:
-                writer = csv.writer(rendu, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-                for line in islice(csv_reader, 0, 12):
-
-                    writer.writerow(line)
-
-        else:
-            nameCSV11 = nameCSV
 
 
 # This function reads the CSV containing the preferences of each student.
@@ -90,10 +72,9 @@ def ordreCouplePref(p1, p2):
 #  Return une matrice des etudiants avec comme valeur :
 #  0 = pas d'arrete pour le couple de pref (p1, p2), 1 = arrete, -1 = lui meme
 
-def keepAuthorizedPreferences(p1, p2):
+def keepAuthorizedPreferences(p1, p2, tabAppreciations):
 
-    # On récupère la matrice venant du CSV
-    appreciations = readAppreciationsCSV()[1]
+    appreciations = copy.deepcopy(tabAppreciations);
 
     ordreComparant = ordreCouplePref(p1, p2)
 
@@ -423,25 +404,27 @@ def main():
     rang2 = 5
     i = 0
 
+    appreciations = readAppreciationsCSV()[1]
+
     while len(resultList) == 0:
 
         if i == 1 or i == 3 or i == 6 or i == 10 or i == 15:
             rang2 = rang2 - 1
             rang1 = 5
 
-        authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
-        
+        authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2], appreciations)
+
         if checkIfPossible(authorizedPref):
 
             resultList = listCorrectCombinations(authorizedPref)
 
-        #if len(resultList) == 0:
-        #    print("Pas de résultat pour : " + listPref[rang1] + " " + listPref[rang2])
+        if len(resultList) == 0:
+            print("Pas de resultat pour : " + listPref[rang1] + " " + listPref[rang2])
 
         i = i+1
         rang1 = rang1 - 1
 
-    #print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
+    print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
 
     new_now = time.time()
     print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
