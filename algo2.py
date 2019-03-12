@@ -13,7 +13,7 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
 
 #ext = sys.argv[1][1:]
 #nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-nameCSV = "preferencesClasse .csv"
+nameCSV = "preferencesClasse.csv"
 #nameCSV11 = "11eleves.csv"
 
 
@@ -218,7 +218,7 @@ def findBestBinomeForAStudent(student, binomes):
 
         p1 = couplePref[0]
         p2 = couplePref[1]
-        o = ordreCouplePref(p1, p2)
+        ordre = ordreCouplePref(p1, p2)
 
         print("Preferences : ", p1, p2)
 
@@ -226,8 +226,8 @@ def findBestBinomeForAStudent(student, binomes):
 
             if len(b) == 2:
 
-                condition1 = ordreCouplePref(appreciations[student][b[0]], appreciations[b[0]][student]) >= o
-                condition2 = ordreCouplePref(appreciations[student][b[1]], appreciations[b[1]][student]) >= o
+                condition1 = ordreCouplePref(appreciations[student][b[0]], appreciations[b[0]][student]) <= ordre
+                condition2 = ordreCouplePref(appreciations[student][b[1]], appreciations[b[1]][student]) <= ordre
 
 
 
@@ -545,6 +545,6 @@ def main():
     #finalResult = keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
 
 
-    #writeCSV(nameCorrelation, [resultList])
+    writeCSV(nameCorrelation, [resultList])
 
 main()
