@@ -9,6 +9,8 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
+
+
 #ext = sys.argv[1][1:]
 #nameCSV = ".../DONNEES/preferences" + ext + ".csv"
 nameCSV = "preferencesClasse .csv"
@@ -35,6 +37,7 @@ def readAppreciationsCSV():
         del nameCorrelation[-1]
         return nameCorrelation, appreciations
 
+(nameCorrelation, appreciations) = readAppreciationsCSV()
 
 # This function writes a CSV conforming to the standards required by the project.
 def writeCSV(nameCorrelation, listResult):
@@ -208,9 +211,48 @@ def NbOccurenceOfStudent(numStudent, matrice):
 
     return nbPotentialMate + 1
 
+# Return the index of the binome for which the student has the best preferences
+def findBestBinomeForAStudent(student, binomes):
+
+    for couplePref in ordreMentions:
+
+        p1 = couplePref[0]
+        p2 = couplePref[1]
+        o = ordreCouplePref(p1, p2)
+
+        print("Preferences : ", p1, p2)
+
+        for b in binomes:
+
+            if len(b) == 2:
+
+                condition1 = ordreCouplePref(appreciations[student][b[0]], appreciations[b[0]][student]) >= o
+                condition2 = ordreCouplePref(appreciations[student][b[1]], appreciations[b[1]][student]) >= o
 
 
 
+
+                """
+                condition1 = appreciations[student][b[0]] == p1 and appreciations[b[0]][student] == p2
+                condition2 = appreciations[student][b[1]] == p1 and appreciations[b[1]][student] == p2
+
+                condition3 = appreciations[student][b[0]] == p2 and appreciations[b[0]][student] == p1
+                condition4 = appreciations[student][b[1]] == p1 and appreciations[b[1]][student] == p2
+
+                condition5 = appreciations[student][b[0]] == p1 and appreciations[b[0]][student] == p2
+                condition6 = appreciations[student][b[1]] == p2 and appreciations[b[1]][student] == p1
+
+                condition7 = appreciations[student][b[0]] == p2 and appreciations[b[0]][student] == p1
+                condition8 = appreciations[student][b[1]] == p2 and appreciations[b[1]][student] == p1
+
+                condition9 = (condition1 and condition2) or (condition3 and condition4) or (condition5 and condition6) or (condition7 and condition8)
+                """
+                if condition1 and condition2:
+                    print("Meilleur binome : ", b)
+                    print("indice meilleur binome : ", binomes.index(b))
+                    return binomes.index(b)
+
+    return -1
 
 
 def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
@@ -244,7 +286,19 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
 
         studentHasMinOccurence = StudentMinOccurenceForTrinome(studentsNotAssigned, matrice)
         print("Etudiant avec le moins d'occurence  : ", studentHasMinOccurence)
-        ajout = False
+
+        j = findBestBinomeForAStudent(studentHasMinOccurence, combinaisonBinomes)
+
+        b1 = combinaisonBinomes[j][0]
+        b2 = combinaisonBinomes[j][1]
+
+        combinaisonBinomes[j] = (b1, b2, studentHasMinOccurence)
+
+        studentsNotAssigned.remove(studentHasMinOccurence)
+        i = i + 1
+
+
+        """
         for j in range(len(combinaisonBinomes)):
 
             if (not ajout) and ((matrice[studentHasMinOccurence][combinaisonBinomes[j][0]] == 1 and matrice[studentHasMinOccurence][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentHasMinOccurence] == 1 and matrice[combinaisonBinomes[j][1]][studentHasMinOccurence] == 1)) :
@@ -253,10 +307,9 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
                 print(combinaisonBinomes)
                 ajout = True
                 print("Etudiants non assigned : ", studentsNotAssigned)
+        """
 
 
-        studentsNotAssigned.remove(studentHasMinOccurence)
-        i = i + 1
 
 
     return combinaisonBinomes
@@ -456,9 +509,6 @@ def main():
     rang1 = 5
     rang2 = 5
     i = 0
-
-    nameCorrelation = readAppreciationsCSV()[0]
-    appreciations = readAppreciationsCSV()[1]
 
     while len(resultList) == 0 or nbStudentsInCombination(resultList) != len(nameCorrelation) :
 
