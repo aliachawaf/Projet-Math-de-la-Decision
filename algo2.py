@@ -11,7 +11,7 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
 
 #ext = sys.argv[1][1:]
 #nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-nameCSV = "preferences.csv"
+nameCSV = "preferencesClasse .csv"
 #nameCSV11 = "11eleves.csv"
 
 
@@ -186,6 +186,32 @@ def studentWhoHasMinOccurence(binomes, nbStudents):
 
     return studentHasMinOccurence2
 
+def StudentMinOccurenceForTrinome(students, matrice):
+
+    minOccurrence = 10000
+    studentMin = -1
+    for s in students:
+        tmp = NbOccurenceOfStudent(s, matrice)
+        if tmp < minOccurrence:
+            studentMin = s
+            minOccurrence = tmp
+
+    return studentMin
+
+
+def NbOccurenceOfStudent(numStudent, matrice):
+
+    nbPotentialMate = 0
+    for i in range(len(matrice)):
+        nbPotentialMate += matrice[i][numStudent] + matrice[numStudent][i]
+
+
+    return nbPotentialMate + 1
+
+
+
+
+
 
 def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
 
@@ -196,16 +222,42 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
         if i not in listStudents:
             studentsNotAssigned.append(i)
 
-    print(listStudents)
-    print(studentsNotAssigned)
-    for i in range(len(studentsNotAssigned)):
+    ajout = False
+
+    print("studentsNotAssigned : ", studentsNotAssigned)
+
+    '''for i in range(len(studentsNotAssigned)):
+        ajout = False
 
         for j in range(len(combinaisonBinomes)):
 
-            if (matrice[studentsNotAssigned[i]][combinaisonBinomes[j][0]] == 1 and matrice[studentsNotAssigned[i]][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentsNotAssigned[i]] == 1 and matrice[combinaisonBinomes[j][1]][studentsNotAssigned[i]] == 1) :
+            if (not ajout) and ((matrice[studentsNotAssigned[i]][combinaisonBinomes[j][0]] == 1 and matrice[studentsNotAssigned[i]][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentsNotAssigned[i]] == 1 and matrice[combinaisonBinomes[j][1]][studentsNotAssigned[i]] == 1)) :
 
                 combinaisonBinomes[j] = (combinaisonBinomes[j][0], combinaisonBinomes[j][1], studentsNotAssigned[i])
-                print("alia : ", combinaisonBinomes[j])
+                ajout = True
+'''
+
+
+    i = 0
+    fin = len(studentsNotAssigned)
+    while (i < fin):
+
+        studentHasMinOccurence = StudentMinOccurenceForTrinome(studentsNotAssigned, matrice)
+        print("Etudiant avec le moins d'occurence  : ", studentHasMinOccurence)
+        ajout = False
+        for j in range(len(combinaisonBinomes)):
+
+            if (not ajout) and ((matrice[studentHasMinOccurence][combinaisonBinomes[j][0]] == 1 and matrice[studentHasMinOccurence][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentHasMinOccurence] == 1 and matrice[combinaisonBinomes[j][1]][studentHasMinOccurence] == 1)) :
+
+                combinaisonBinomes[j] = (combinaisonBinomes[j][0], combinaisonBinomes[j][1], studentHasMinOccurence)
+                print(combinaisonBinomes)
+                ajout = True
+                print("Etudiants non assigned : ", studentsNotAssigned)
+
+
+        studentsNotAssigned.remove(studentHasMinOccurence)
+        i = i + 1
+
 
     return combinaisonBinomes
 
@@ -230,14 +282,14 @@ def listCorrectCombinations(matrice):
 
     listCombinationsWithoutTrinome = makeCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
-    print("comb binomes : ", listCombinationsWithoutTrinome)
+    print("binomes avant trinomes : ", listCombinationsWithoutTrinome)
 
     listFinalResult = []
     for c in listCombinationsWithoutTrinome:
 
         #listTmp = listCombinationsWithTrinomes(matrice, c)
         listTmp = makeCombinationsWithTrinomes(matrice, c)
-        print("weeeeeesh", listTmp)
+        print("Repartition finale : ", listTmp)
         for l in listTmp:
             listFinalResult.append(l)
 
@@ -420,9 +472,10 @@ def main():
 
             resultList = listCorrectCombinations(authorizedPref)
 
-        if len(resultList) == 0:
+        if nbStudentsInCombination(resultList) != len(nameCorrelation):
+            print("-----------------------------------")
             print("Pas de resultat pour : " + listPref[rang1] + " " + listPref[rang2])
-
+            print("-----------------------------------")
 
         i = i+1
         rang1 = rang1 - 1
@@ -442,6 +495,6 @@ def main():
     #finalResult = keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
 
 
-    #writeCSV(nameCorrelation, finalResult)
+    #writeCSV(nameCorrelation, [resultList])
 
 main()

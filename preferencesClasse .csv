@@ -1,0 +1,41 @@
+, [Abadie Aubin], [Allard-Serre Thibaut], [Arnaud Paul], [Burette Alice], [Cayuelas Martin], [Chawaf Alia], [Danner Marc-Antoine], [De-Andrade-vaz-Delton], [Debeir Luca], [El Madani Marouane], [Falcone Thomas], [France Quentin], [Gardeisen Marine], [Gayet Simon], [Gestin Rémi], [Gonçalves Lucas], [Guary Nicolas], [Guillaud Nathan], [Kueny Alexandre], [Lacombe Hugo], [Lamhaouar Anissa], [Lecha Damien], [Luangpraseuth Alexis], [Luciano Raphaël], [Machhouri Fatima], [Machry-Jacinto Maria Clara], [Mayeur Yannick], [Mellah Ilias], [Missoum-Benziane Inès], [Ponthieu Théo], [Regnart William], [Roumagnac Julien], [Salelles Marie], [Samson Audrey], [Sanchez Alexis], [Sanchez Antoine], [Sanson Yvan], [Sardois Lucas], [Serafin Solène], [Traineau Nathan]
+Abadie Aubin,Moi,B,P,I,TB,B,I,AB,AB,B,B,P,AB,P,AB,B,P,B,P,B,P,AB,I,AB,P,B,B,P,B,AB,I,P,TB,B,B,B,TB,B,TB,AB
+Allard-Serre Thibaut,AB,Moi,P,P,TB,TB,AB,B,AB,B,TB,AB,TB,AB,B,TB,TB,TB,P,TB,B,B,P,AB,TB,B,B,AB,TB,AB,AB,B,TB,B,B,TB,TB,B,B,P
+Arnaud Paul,AR,B,Moi,TB,B,B,AB,AB,B,AR,TB,B,AR,B,B,B,AR,B,AR,B,B,TB,TB,B,B,AR,TB,B,B,B,AR,B,B,B,TB,B,AR,TB,B,B
+Burette Alice,I,I,TB,Moi,AB,B,AR,AB,P,AB,TB,AB,P,P,AB,TB,AB,AB,AR,P,P,B,B,AR,B,P,TB,AB,AB,AB,P,P,AB,P,AB,P,I,B,AB,AB
+Cayuelas Martin	,AB,AB,AB,P,Moi,B,AR,P,AB,AB,B,AB,P,P,AB,TB,TB,TB,AR,P,P,AB,P,P,TB,P,TB,P,TB,B,AR,B,AB,B,AB,I,I,AB,AB,I
+Chawaf Alia,AB,AB,B,AB,TB,Moi,AR,P,I,AB,TB,B,B,B,TB,TB,B,TB,AR,B,B,TB,B,AR,TB,P,TB,B,TB,AB,P,P,B,B,TB,AR,AB,TB,B,B
+Danner Marc-Antoine,AB,B,TB,I,TB,TB,Moi,B,TB,TB,TB,TB,AR,TB,AR,TB,AB,TB,AB,B,B,AR,AB,AR,TB,TB,TB,TB,TB,TB,AR,B,AB,TB,AR,AR,I,B,AB,B
+De-Andrade-vaz-Delton,AB,AB,AB,AB,AB,AB,AB,Moi,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,TB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB,AB
+Debeir Luca,B,AB,TB,AB,TB,AB,TB,AB,Moi,B,B,B,B,B,AB,B,B,B,AB,P,AB,I,AB,I,B,AB,AB,B,AB,B,AB,B,P,B,I,I,I,AB,TB,B
+El Madani Marouane,AB,B,P,P,AB,AB,P,P,P,Moi,AB,AB,B,P,AB,AB,AB,P,P,P,P,P,P,AB,P,P,P,TB,AB,P,TB,P,P,AB,P,P,P,P,P,AB
+Falcone Thomas,AR,I,B,TB,AB,TB,AR,P,P,AB,Moi,AB,P,AB,TB,TB,AB,AB,AR,AB,P,TB,B,AR,TB,P,TB,P,TB,AB,P,AB,P,AB,TB,P,P,TB,AB,P
+France Quentin,AR,TB,TB,AB,TB,TB,AR,AR,AR,TB,TB,Moi,AR,TB,AR,TB,TB,TB,AR,AB,AB,AR,AR,AR,TB,TB,TB,TB,TB,TB,AR,TB,AB,TB,AR,AR,AR,AB,AB,AR
+Gardeisen Marine,I,I,I,I,B,TB,I,AB,B,TB,TB,AB,Moi,P,TB,TB,I,AB,B,B,B,B,I,I,TB,P,B,AB,TB,I,B,I,B,B,AB,AB,AB,AB,B,TB
+Gayet Simon,P,AB,B,B,B,B,I,P,P,AB,B,TB,AB,Moi,AB,B,TB,TB,AR,P,P,P,AB,I,B,I,B,B,B,TB,AR,TB,AB,TB,P,AR,AR,B,B,B
+Gestin Rémi,P,P,B,B,B,TB,AR,P,I,B,TB,AR,TB,P,Moi,TB,AR,B,I,AB,AB,TB,B,I,B,P,TB,AB,TB,AR,AB,AR,AB,AB,TB,P,I,TB,B,AB
+Gonçalves Lucas,P,B,TB,TB,TB,TB,B,B,B,B,TB,TB,TB,B,TB,Moi,B,B,AB,B,B,B,B,AB,TB,AB,TB,B,B,B,AB,AB,B,B,TB,AB,AB,B,B,AB
+Guary Nicolas,I,B,B,AB,TB,B,AR,AB,AB,B,TB,TB,I,TB,AB,TB,Moi,TB,I,AB,AB,AB,AB,I,TB,AB,TB,TB,AB,TB,AR,TB,AB,TB,P,AR,I,AB,TB,TB
+Guillaud Nathan,AB,AB,AB,P,TB,AB,AR,P,AB,P,B,B,I,P,AB,B,TB,Moi,AR,B,P,P,P,I,AB,P,B,P,P,TB,AR,TB,AB,B,P,I,I,AB,AB,P
+Kueny Alexandre,P,B,AR,I,AR,B,I,B,AR,AR,AB,AR,AB,B,AR,B,AB,AR,Moi,TB,AR,AB,I,P,AR,B,AR,AR,B,AR,P,AR,B,AR,AR,TB,TB,B,AR,AR
+Lacombe Hugo,B,TB,TB,AR,AR,AB,AR,AR,AR,AB,B,P,AR,AR,AB,AB,AR,P,TB,Moi,P,TB,TB,P,P,P,AB,P,AB,AR,I,AR,TB,AB,B,TB,TB,TB,AB,AR
+LAMHAOUAR Anissa,P,P,P,B,TB,TB,I,TB,P,P,TB,AB,B,P,B,AB,AB,AB,I,I,Moi,I,I,P,B,B,AB,P,TB,P,P,AB,AB,AB,I,P,AB,P,B,I
+Lecha Damien,I,AB,TB,TB,B,TB,AR,AB,AB,AB,TB,B,AR,P,TB,TB,AR,B,I,B,I,Moi,B,I,B,AB,TB,AB,AB,AB,P,AR,AB,AB,TB,P,I,TB,AB,AB
+Luangpraseuth Alexis,I,B,B,P,B,B,AR,AB,I,AB,TB,AB,AR,AB,B,B,B,B,I,B,AB,B,Moi,I,B,AB,TB,AB,AB,B,I,AB,AB,P,B,P,I,TB,AB,AB
+Luciano Raphaël,B,B,B,B,AB,AB,AB,AB,AB,B,B,B,B,B,B,B,AB,AB,B,B,B,B,B,Moi,B,AB,B,B,B,AB,B,AB,B,AB,B,B,B,B,AB,AB
+Machhouri Fatima,I,B,B,TB,TB,TB,AR,AB,AB,B,TB,B,TB,AB,TB,TB,TB,TB,P,AB,TB,B,B,AB,Moi,B,TB,B,TB,AB,P,B,P,AB,TB,P,P,TB,TB,P
+Machry-Jacinto Maria Clara,AB,AB,AB,AB,AB,AB,AB,TB,AB,AB,B,AB,AB,P,P,B,AB,AB,P,AB,B,B,AB,AB,AB,Moi,B,AB,AB,P,B,P,AB,AB,AB,B,B,AB,AB,AB
+Mayeur Yannick,AB,AB,B,TB,AB,TB,I,P,P,AB,TB,P,P,P,B,TB,AB,AB,AR,AB,P,B,B,AR,TB,P,Moi,P,AB,P,I,P,AB,AB,B,P,I,TB,AB,P
+Mellah Ilias,B,B,B,B,B,B,B,B,B,TB,B,TB,B,TB,B,B,TB,B,B,B,B,B,B,AB,TB,B,B,Moi,B,TB,B,TB,B,B,B,B,B,B,B,TB
+Missoum-Benziane Inès,I,P,P,B,TB,TB,I,AB,P,P,TB,AB,TB,P,TB,TB,P,B,P,AB,TB,B,I,I,TB,P,B,I,Moi,I,AB,I,B,P,B,I,P,B,B,P
+Ponthieu Théo,AR,AR,I,I,TB,P,AR,AR,I,P,TB,TB,P,TB,I,TB,TB,TB,AR,AR,B,AR,P,AR,TB,AB,TB,TB,TB,Moi,AR,TB,B,TB,B,AR,AR,B,B,P
+Regnart William,AB,B,AB,B,AB,B,P,AB,AB,TB,B,P,TB,I,TB,B,P,P,AB,AB,P,AB,AR,P,AB,AB,B,B,AB,P,Moi,AR,AB,AB,AB,B,TB,B,AB,AB
+Roumagnac Julien,AR,I,I,AR,TB,I,AR,AR,P,AB,B,TB,AR,TB,AR,B,TB,TB,AR,AR,P,AR,AR,AR,B,AR,AB,TB,I,TB,AR,Moi,AR,TB,AR,AR,P,AB,P,I
+Salelles Marie,B,B,P,AR,B,AB,I,AB,P,AR,AB,AR,P,P,AB,AB,B,B,I,TB,AB,AB,P,P,AB,AB,AB,I,AB,AR,P,AR,Moi,TB,AB,TB,TB,AB,TB,P
+Samson Audrey,I,I,P,AR,TB,AB,AR,AR,P,AB,TB,TB,P,TB,AB,TB,TB,TB,AR,P,I,AB,P,AR,AR,I,TB,TB,AB,TB,AR,TB,B,Moi,P,I,B,P,AR,AR
+Sanchez Alexis,I,B,TB,B,B,TB,AR,P,I,B,TB,P,P,I,TB,TB,AR,B,I,B,P,TB,TB,AR,TB,AB,TB,AB,B,AR,AR,AR,AB,AB,Moi,AB,P,TB,AB,P
+Sanchez Antoine,I,TB,AB,I,B,B,AR,B,AR,B,AB,AB,AR,AR,B,B,B,B,AR,TB,B,B,AB,I,B,TB,B,P,B,AB,P,P,TB,B,B,Moi,TB,B,B,AB
+Sanson Yvan,B,B,I,AR,B,AB,I,P,AR,AB,AB,P,P,AR,P,AB,P,AB,I,TB,P,P,I,P,AB,B,AB,AR,AB,P,AB,AR,TB,TB,B,TB,Moi,B,TB,P
+Sardois Lucas,B,TB,TB,B,B,B,B,B,B,B,TB,B,B,B,TB,TB,B,B,B,TB,B,TB,TB,B,B,B,TB,B,B,B,B,B,B,B,TB,B,B,Moi,B,B
+Serafin Solène,B,AB,B,AR,TB,TB,I,AR,B,AB,TB,B,AB,AR,B,TB,B,TB,AB,B,AB,TB,AB,AR,B,AR,B,AR,TB,B,AB,P,TB,B,AR,AR,TB,TB,Moi,AR
+Traineau Nathan,TB,TB,TB,B,TB,TB,TB,TB,TB,TB,TB,TB,TB,TB,TB,TB,TB,TB,B,B,TB,B,TB,P,TB,TB,TB,TB,TB,TB,AB,TB,TB,TB,TB,TB,TB,TB,TB,Moi
