@@ -13,7 +13,7 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
 
 #ext = sys.argv[1][1:]
 #nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-nameCSV = "preferencesClasse.csv"
+nameCSV = "preferencesAR.csv"
 #nameCSV11 = "11eleves.csv"
 
 
@@ -336,15 +336,16 @@ def listCorrectCombinations(matrice):
     listCombinationsWithoutTrinome = makeCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
     print("binomes avant trinomes : ", listCombinationsWithoutTrinome)
-
     listFinalResult = []
-    for c in listCombinationsWithoutTrinome:
+    if len(listCombinationsWithoutTrinome[0]) == nbBinomesNeeded:
 
-        #listTmp = listCombinationsWithTrinomes(matrice, c)
-        listTmp = makeCombinationsWithTrinomes(matrice, c)
-        print("Repartition finale : ", listTmp)
-        for l in listTmp:
-            listFinalResult.append(l)
+        for c in listCombinationsWithoutTrinome:
+
+            #listTmp = listCombinationsWithTrinomes(matrice, c)
+            listTmp = makeCombinationsWithTrinomes(matrice, c)
+            print("Repartition finale : ", listTmp)
+            for l in listTmp:
+                listFinalResult.append(l)
 
     return listFinalResult
 
