@@ -11,9 +11,9 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
 
 
 
-#ext = sys.argv[1][1:]
-#nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-nameCSV = "preferencesAR.csv"
+ext = sys.argv[1][1:]
+nameCSV = ".../DONNEES/preferences" + ext + ".csv"
+#nameCSV = "preferencesAR.csv"
 #nameCSV11 = "11eleves.csv"
 
 
@@ -208,7 +208,6 @@ def NbOccurenceOfStudent(numStudent, matrice):
     for i in range(len(matrice)):
         nbPotentialMate += matrice[i][numStudent] + matrice[numStudent][i]
 
-
     return nbPotentialMate + 1
 
 # Return the index of the binome for which the student has the best preferences
@@ -266,26 +265,11 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
 
     ajout = False
 
-    print("studentsNotAssigned : ", studentsNotAssigned)
-
-    '''for i in range(len(studentsNotAssigned)):
-        ajout = False
-
-        for j in range(len(combinaisonBinomes)):
-
-            if (not ajout) and ((matrice[studentsNotAssigned[i]][combinaisonBinomes[j][0]] == 1 and matrice[studentsNotAssigned[i]][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentsNotAssigned[i]] == 1 and matrice[combinaisonBinomes[j][1]][studentsNotAssigned[i]] == 1)) :
-
-                combinaisonBinomes[j] = (combinaisonBinomes[j][0], combinaisonBinomes[j][1], studentsNotAssigned[i])
-                ajout = True
-'''
-
-
     i = 0
     fin = len(studentsNotAssigned)
     while (i < fin):
 
         studentHasMinOccurence = StudentMinOccurenceForTrinome(studentsNotAssigned, matrice)
-        print("Etudiant avec le moins d'occurence  : ", studentHasMinOccurence)
 
         j = findBestBinomeForAStudent(studentHasMinOccurence, combinaisonBinomes)
 
@@ -296,21 +280,6 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
 
         studentsNotAssigned.remove(studentHasMinOccurence)
         i = i + 1
-
-
-        """
-        for j in range(len(combinaisonBinomes)):
-
-            if (not ajout) and ((matrice[studentHasMinOccurence][combinaisonBinomes[j][0]] == 1 and matrice[studentHasMinOccurence][combinaisonBinomes[j][1]] == 1) or (matrice[combinaisonBinomes[j][0]][studentHasMinOccurence] == 1 and matrice[combinaisonBinomes[j][1]][studentHasMinOccurence] == 1)) :
-
-                combinaisonBinomes[j] = (combinaisonBinomes[j][0], combinaisonBinomes[j][1], studentHasMinOccurence)
-                print(combinaisonBinomes)
-                ajout = True
-                print("Etudiants non assigned : ", studentsNotAssigned)
-        """
-
-
-
 
     return combinaisonBinomes
 
@@ -335,7 +304,6 @@ def listCorrectCombinations(matrice):
 
     listCombinationsWithoutTrinome = makeCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
-    print("binomes avant trinomes : ", listCombinationsWithoutTrinome)
     listFinalResult = []
     if len(listCombinationsWithoutTrinome[0]) == nbBinomesNeeded:
 
@@ -343,7 +311,7 @@ def listCorrectCombinations(matrice):
 
             #listTmp = listCombinationsWithTrinomes(matrice, c)
             listTmp = makeCombinationsWithTrinomes(matrice, c)
-            print("Repartition finale : ", listTmp)
+
             for l in listTmp:
                 listFinalResult.append(l)
 
@@ -370,107 +338,6 @@ def listStudentsInTrinomes(trinomes):
         list.append(trinomes[i][2])  # third student of the trinome i
 
     return list
-
-#affiche les differentes combinaisons finales
-def prefResult(resultList, matrice):
-
-    for combination in resultList:
-
-        for group in combination:
-
-            pref = []
-
-            if (len(group) == 2):
-
-                students = []
-
-                for i in group:
-                    students.append(i)
-
-                pref1 = matrice[students[0]][students[1]]
-                pref2 = matrice[students[1]][students[0]]
-
-                pref.append((pref1, pref2))
-
-            else:
-
-                students = []
-
-                for i in group:
-                    students.append(i)
-
-                pref1 = matrice[students[0]][students[1]]
-                pref2 = matrice[students[1]][students[0]]
-                pref3 = matrice[students[2]][students[0]]
-                pref4 = matrice[students[0]][students[2]]
-                pref5 = matrice[students[1]][students[2]]
-                pref6 = matrice[students[2]][students[1]]
-
-                pref.append((pref1, pref2, pref3, pref4, pref5, pref6))
-
-            print(pref)
-        print(" ")
-
-
-# Return the min occurrence of the pefMin in the list of all combinations
-def keepCombinationsWithMinOccurrence(resultList, matrice, prefMin):
-
-    nbOccurrenceMin = 1;
-
-    # Search for the min number of occurence of prefMin
-    for combination in resultList:
-
-        nbOccurrenceComb = nbOccurenceOfPrefMin(combination, matrice, prefMin)
-
-        if nbOccurrenceComb < nbOccurrenceMin:
-            nbOccurrenceMin = nbOccurrenceComb
-
-
-    # Keep only combinations with the min number of occurrence found
-    finalResult = []
-
-    for combination in resultList:
-        nbOccurrenceComb = nbOccurenceOfPrefMin(combination, matrice, prefMin)
-
-        if nbOccurrenceComb == nbOccurrenceMin:
-            finalResult.append(combination)
-
-    return finalResult
-
-
-# Return the number of occurrence of prefMin in combination
-def nbOccurenceOfPrefMin(combination, matrice, prefMin):
-
-    nbOccurrence = 0;
-    pref = []
-
-    for group in combination:
-
-        students = []
-        for i in group:
-            students.append(i)
-
-        pref1 = matrice[students[0]][students[1]]
-        pref2 = matrice[students[1]][students[0]]
-        pref.append(pref1)
-        pref.append(pref2)
-
-        if (len(group) == 3):
-            pref3 = matrice[students[2]][students[0]]
-            pref4 = matrice[students[0]][students[2]]
-            pref5 = matrice[students[1]][students[2]]
-            pref6 = matrice[students[2]][students[1]]
-
-            pref.append(pref3)
-            pref.append(pref4)
-            pref.append(pref5)
-            pref.append(pref6)
-
-    for p in pref:
-        if p == prefMin:
-            nbOccurrence += 1
-
-    return nbOccurrence
 
 
 # Return true if mention1 is better or equal than the mention2
