@@ -10,7 +10,7 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
 ext = sys.argv[1][1:]
-nameCSV = ".../DONNEES/preferences" + ext + ".csv"
+nameCSV = "../DONNEES/preferences" + ext + ".csv"
 
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
