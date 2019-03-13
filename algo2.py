@@ -9,13 +9,8 @@ ordreMentions = [("TB", "TB"), ("TB", "B"), ("B", "B"), ("TB", "AB"), ("B", "AB"
                  ("B", "P"), ("AB", "P"), ("P", "P"), ("TB", "I"), ("B", "I"), ("AB", "I"), ("P", "I"), ("I", "I"),
                  ("TB", "AR"), ("B", "AR"), ("AB", "AR"), ("P", "AR"), ("I", "AR"), ("AR", "AR")]
 
-
-
 ext = sys.argv[1][1:]
 nameCSV = ".../DONNEES/preferences" + ext + ".csv"
-#nameCSV = "preferencesAR.csv"
-#nameCSV11 = "11eleves.csv"
-
 
 # This function reads the CSV containing the preferences of each student.
 # Returns a dictionary row-name, and the matrix of appreciations.
@@ -38,6 +33,7 @@ def readAppreciationsCSV():
         return nameCorrelation, appreciations
 
 (nameCorrelation, appreciations) = readAppreciationsCSV()
+
 
 # This function writes a CSV conforming to the standards required by the project.
 def writeCSV(nameCorrelation, listResult):
@@ -74,11 +70,9 @@ def ordreCouplePref(p1, p2):
 
 #  Return une matrice des etudiants avec comme valeur :
 #  0 = pas d'arrete pour le couple de pref (p1, p2), 1 = arrete, -1 = lui meme
-
 def keepAuthorizedPreferences(p1, p2, tabAppreciations):
 
     appreciations = copy.deepcopy(tabAppreciations);
-
     ordreComparant = ordreCouplePref(p1, p2)
 
     for i in range(len(appreciations)):
@@ -145,7 +139,7 @@ def listPossibleBinomes(authorizedPref):
 
     return binomes
 
-
+# Return a correct combination of binomes
 def makeCombinationsBinomes(binomes, nbStudents):
 
     combinations = []
@@ -164,6 +158,7 @@ def makeCombinationsBinomes(binomes, nbStudents):
     return [combinations]
 
 
+# Return the list of binomes without the binomes containing the student
 def deleteStudentFromBinomes(binomes, student):
 
     newBinomes = []
@@ -173,22 +168,23 @@ def deleteStudentFromBinomes(binomes, student):
     return newBinomes
 
 
+# Return the student who has the minimum number of possible groupMate to form a binome
 def studentWhoHasMinOccurence(binomes, nbStudents):
 
-    studentHasMinOccurence2 = -1
-
+    studentHasMinOccurence = -1
     students = listStudentsInBinomes(binomes)
-
     minOccurrence = len(binomes)
 
     for s in range(nbStudents):
 
         if students.count(s) <= minOccurrence and students.count(s) != 0:
             minOccurrence = students.count(s)
-            studentHasMinOccurence2 = s
+            studentHasMinOccurence = s
 
-    return studentHasMinOccurence2
+    return studentHasMinOccurence
 
+
+# Return the student who has the minimum number of possible groupMate to form a trinome
 def StudentMinOccurenceForTrinome(students, matrice):
 
     minOccurrence = 10000
@@ -210,6 +206,7 @@ def NbOccurenceOfStudent(numStudent, matrice):
 
     return nbPotentialMate + 1
 
+
 # Return the index of the binome for which the student has the best preferences
 def findBestBinomeForAStudent(student, binomes):
 
@@ -219,8 +216,6 @@ def findBestBinomeForAStudent(student, binomes):
         p2 = couplePref[1]
         ordre = ordreCouplePref(p1, p2)
 
-        print("Preferences : ", p1, p2)
-
         for b in binomes:
 
             if len(b) == 2:
@@ -228,27 +223,7 @@ def findBestBinomeForAStudent(student, binomes):
                 condition1 = ordreCouplePref(appreciations[student][b[0]], appreciations[b[0]][student]) <= ordre
                 condition2 = ordreCouplePref(appreciations[student][b[1]], appreciations[b[1]][student]) <= ordre
 
-
-
-
-                """
-                condition1 = appreciations[student][b[0]] == p1 and appreciations[b[0]][student] == p2
-                condition2 = appreciations[student][b[1]] == p1 and appreciations[b[1]][student] == p2
-
-                condition3 = appreciations[student][b[0]] == p2 and appreciations[b[0]][student] == p1
-                condition4 = appreciations[student][b[1]] == p1 and appreciations[b[1]][student] == p2
-
-                condition5 = appreciations[student][b[0]] == p1 and appreciations[b[0]][student] == p2
-                condition6 = appreciations[student][b[1]] == p2 and appreciations[b[1]][student] == p1
-
-                condition7 = appreciations[student][b[0]] == p2 and appreciations[b[0]][student] == p1
-                condition8 = appreciations[student][b[1]] == p2 and appreciations[b[1]][student] == p1
-
-                condition9 = (condition1 and condition2) or (condition3 and condition4) or (condition5 and condition6) or (condition7 and condition8)
-                """
                 if condition1 and condition2:
-                    print("Meilleur binome : ", b)
-                    print("indice meilleur binome : ", binomes.index(b))
                     return binomes.index(b)
 
     return -1
@@ -284,23 +259,11 @@ def makeCombinationsWithTrinomes(matrice, combinaisonBinomes):
     return combinaisonBinomes
 
 
-# return true if the binome is in the list of trinomes
-def binomeIsNotInTrinomes(binome, listTrinomes):
-
-    for t in listTrinomes:
-        if binome[0] == t[0] or binome[0] == t[1] or binome[0] == t[2]:
-            return False
-
-    return True
-
-
 #  Return the list of all combinaison possible based on the matrice
 def listCorrectCombinations(matrice):
 
     nbStudents = len(matrice)
     nbBinomesNeeded = nbBinomeTrinome(nbStudents)[0] + nbBinomeTrinome(nbStudents)[1]
-
-    #listCombinationsWithoutTrinome = listCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
     listCombinationsWithoutTrinome = makeCombinationsBinomes(listPossibleBinomes(matrice), nbStudents)
 
@@ -309,7 +272,6 @@ def listCorrectCombinations(matrice):
 
         for c in listCombinationsWithoutTrinome:
 
-            #listTmp = listCombinationsWithTrinomes(matrice, c)
             listTmp = makeCombinationsWithTrinomes(matrice, c)
 
             for l in listTmp:
@@ -329,37 +291,10 @@ def listStudentsInBinomes(binomes):
 
     return list
 
-def listStudentsInTrinomes(trinomes):
-    list = []
-
-    for i in range(len(trinomes)):
-        list.append(trinomes[i][0])  # First student of the trinome i
-        list.append(trinomes[i][1])  # Second student of the trinome i
-        list.append(trinomes[i][2])  # third student of the trinome i
-
-    return list
-
-
-# Return true if mention1 is better or equal than the mention2
-def isBetter(mention1, mention2):
-    relation = ["AR", "I", "P", "AB", "B", "TB"]
-    rang1 = 0
-    rang2 = 0
-
-    reponse = False
-    for i in range(len(relation)):
-        if relation[i] == mention1:
-            rang1 = i
-        if relation[i] == mention2:
-            rang2 = i
-
-    return rang1 >= rang2
-
 
 def nbStudentsInCombination(combination):
 
     nb = 0
-
     if len(combination) != 0 :
         for group in combination:
 
@@ -390,28 +325,18 @@ def main():
 
             resultList = listCorrectCombinations(authorizedPref)
 
-        if nbStudentsInCombination(resultList) != len(nameCorrelation):
-            print("-----------------------------------")
-            print("Pas de resultat pour : " + listPref[rang1] + " " + listPref[rang2])
-            print("-----------------------------------")
+        #if nbStudentsInCombination(resultList) != len(nameCorrelation):
+            #print("-----------------------------------")
+            #print("Pas de resultat pour : " + listPref[rang1] + " " + listPref[rang2])
+            #print("-----------------------------------")
 
         i = i+1
         rang1 = rang1 - 1
 
-    print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
-
+    #print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
     new_now = time.time()
-    print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
-
+    #print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
     print("Resultat final : ", resultList)
-
-    if isBetter(rang1+1, rang2):
-        prefMin = listPref[rang2]
-    else:
-        prefMin = listPref[rang1+1]
-
-    #finalResult = keepCombinationsWithMinOccurrence(resultList, readAppreciationsCSV()[1], prefMin)
-
 
     writeCSV(nameCorrelation, [resultList])
 
