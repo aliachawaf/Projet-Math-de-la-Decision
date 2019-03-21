@@ -276,7 +276,7 @@ def listStudentsInTrinomes(trinomes):
     return list
 
 
-def main():
+def main(number_results_max):
 
     now = time.time()
     listPref = ["AR", "I", "P", "AB", "B", "TB"]
@@ -293,7 +293,7 @@ def main():
             rang1 = 5
 
         authorizedPref = keepAuthorizedPreferences(listPref[rang1], listPref[rang2])
-        
+
         if checkIfPossible(authorizedPref):
 
             resultList = listCorrectCombinations(authorizedPref)
@@ -307,11 +307,11 @@ def main():
     #print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
 
     new_now = time.time()
-    #print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
 
     nameCorrelation = readAppreciationsCSV()[0]
 
-    writeCSV(nameCorrelation, resultList)
+    finalResult = []
+    for c in range(number_results_max):
+        finalResult.append(resultList[c])
 
-
-main()
+    writeCSV(nameCorrelation, finalResult)

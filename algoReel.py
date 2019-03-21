@@ -336,8 +336,6 @@ def main():
     #print ("resultat pour : " + listPref[rang1+1] + " " + listPref[rang2])
     new_now = time.time()
     #print("\n\nTemps total d'execution : ", new_now - now, "\n\n")
-#print("Resultat final : ", resultList)
+    #print("Resultat final : ", resultList)
 
     writeCSV(nameCorrelation, [resultList])
-
-main()
